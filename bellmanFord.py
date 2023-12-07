@@ -157,7 +157,7 @@ def GloutonFas(G):
         G (DictionnaireAdjacenceOrientePondere): Le graphe orienté pondéré.
 
     Returns:
-        list: Une liste d'entiers représentant les sommets formant un FAS.
+        list: Une liste d'entiers représentant l'ordre des sommets.
     """
     s1 = []
     s2 = []
