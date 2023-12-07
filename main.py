@@ -39,7 +39,8 @@ while True:
             break
 
 # T = union_chemin(g1, g2, g3, source)
- T= union_chemin_iter([g1,g2,g3,G4,G5,G6], source)
+
+T = union_chemin_iter([g1,g2,g3,G4,G5,G6], source)
 
 ordre = GloutonFas(T)
 print('ordre : ', ordre)
