@@ -3,10 +3,17 @@ import math
 from random import shuffle
 
 
-"""
-Sortie : plus_court_chemin, nb_iterations, bool_circuit_neg
-"""
 def BellmanFord(G, s):
+    """
+    Applique l'algorithme de Bellman-Ford pour trouver le plus court chemin depuis une source dans un graphe orienté pondéré.
+
+    Parameters:
+        G (DictionnaireAdjacenceOrientePondere): Le graphe orienté pondéré.
+        s (int): Le sommet source.
+
+    Returns:
+        Tuple: Un tuple contenant le tableau des parents, le nombre d'itérations, et un booléen indiquant la présence d'un circuit négatif.
+    """
     d = [math.inf for _ in range(G.nombre_sommets())]
     parent = [None for _ in range(G.nombre_sommets())]
     d[s] = 0
@@ -35,6 +42,17 @@ def BellmanFord(G, s):
 
 
 def BellmanFord2(G, s, ordre_sommets):
+    """
+    Applique l'algorithme de Bellman-Ford en utilisant un ordre spécifié des sommets.
+
+    Parameters:
+        G (DictionnaireAdjacenceOrientePondere): Le graphe orienté pondéré.
+        s (int): Le sommet source.
+        ordre_sommets (list): L'ordre spécifié des sommets.
+
+    Returns:
+        Tuple: Un tuple contenant le tableau des parents, le nombre d'itérations, et un booléen indiquant la présence d'un circuit négatif.
+    """
     d = [math.inf for _ in range(G.nombre_sommets())]
     parent = [None for _ in range(G.nombre_sommets())]
     d[s] = 0
@@ -63,39 +81,64 @@ def BellmanFord2(G, s, ordre_sommets):
 
 
 def BellmanFordAleatoireUniforme(G, s):
+    """
+    Applique l'algorithme de Bellman-Ford en utilisant un ordre aléatoire des sommets.
+
+    Parameters:
+        G (DictionnaireAdjacenceOrientePondere): Le graphe orienté pondéré.
+        s (int): Le sommet source.
+
+    Returns:
+        Tuple: Un tuple contenant le tableau des parents, le nombre d'itérations, et un booléen indiquant la présence d'un circuit négatif.
+    """
     ordre = list(G.sommets())
     shuffle(ordre)
     print('ordre aléatoire: ', ordre)
     return BellmanFord2(G, s, ordre)
 
 
-
-"""
-Sortie : un sommet source, ou None s'il n'y en a pas
-"""
 def contient_source(G):
+    """
+    Vérifie si le graphe contient un sommet source (degré entrant égal à zéro).
+
+    Parameters:
+        G (DictionnaireAdjacenceOrientePondere): Le graphe orienté pondéré.
+
+    Returns:
+        int or None: Le sommet source s'il existe, sinon None.
+    """
     for u in G.sommets():
         if G.degre_entrant(u) == 0:
             return u
     return None
 
 
-"""
-Sortie : un sommet puit, ou None s'il n'y en a pas
-"""
 def contient_puit(G):
+    """
+    Vérifie si le graphe contient un sommet puit (degré sortant égal à zéro).
+
+    Parameters:
+        G (DictionnaireAdjacenceOrientePondere): Le graphe orienté pondéré.
+
+    Returns:
+        int or None: Le sommet puit s'il existe, sinon None.
+    """
     for u in G.sommets():
         if G.degre_sortant(u) == 0:
             return u
     return None
 
 
-"""
-On suppose que G n'est pas vide.
-
-Sortie : un sommet u tel que ( deg_sort(u)-deg_entr(u) ) soit le maximum
-"""
 def max_diff_deg_sort_entr(G):
+    """
+    Trouve un sommet u tel que (deg_sort(u) - deg_entr(u)) soit le maximum.
+
+    Parameters:
+        G (DictionnaireAdjacenceOrientePondere): Le graphe orienté pondéré non vide.
+
+    Returns:
+        int: Le sommet u tel que (deg_sort(u) - deg_entr(u)) soit le maximum.
+    """
     maxi = 0
     res = list(G.sommets())[0]
     for u in G.sommets():
@@ -107,6 +150,15 @@ def max_diff_deg_sort_entr(G):
 
 
 def GloutonFas(G):
+    """
+    Applique l'algorithme glouton pour trouver un ordre linéaire des sommets dans un graphe orienté pondéré.
+
+    Parameters:
+        G (DictionnaireAdjacenceOrientePondere): Le graphe orienté pondéré.
+
+    Returns:
+        list: Une liste d'entiers représentant les sommets formant un FAS.
+    """
     s1 = []
     s2 = []
     while G.nombre_sommets() != 0:

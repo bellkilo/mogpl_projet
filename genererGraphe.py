@@ -5,6 +5,15 @@ from bellmanFord import BellmanFord
 
 
 def generer_graphe(n):
+    """
+    Génère un graphe orienté pondéré avec n sommets, en suivant un processus spécifique pour générer les arcs.
+
+    Parameters:
+        n (int): Le nombre de sommets du graphe.
+
+    Returns:
+        Tuple: Un tuple contenant le graphe généré (objet DictionnaireAdjacenceOrientePondere) et la source du graphe.
+    """
     G = DictionnaireAdjacenceOrientePondere()
     G.ajouter_sommets([i for i in range(n)])
 
@@ -38,6 +47,15 @@ def generer_graphe(n):
 
 
 def generer_homographe(G):
+    """
+    Génère un graphe homogène à partir d'un graphe donné en changeant les poids des arcs.
+
+    Parameters:
+        G (DictionnaireAdjacenceOrientePondere): Le graphe d'origine.
+
+    Returns:
+        DictionnaireAdjacenceOrientePondere: Le graphe homogène généré.
+    """
     H = DictionnaireAdjacenceOrientePondere()
     H.ajouter_sommets(G.sommets())
     for (u,v,p) in G.arcs():
@@ -47,6 +65,16 @@ def generer_homographe(G):
     
 
 def union_chemin(G1, G2, G3, s):
+    """
+    Crée un nouveau graphe en unissant les chemins les plus courts de trois graphes homogènes à partir d'une source donnée.
+
+    Parameters:
+        G1, G2, G3 (DictionnaireAdjacenceOrientePondere): Trois graphes d'entrée.
+        s (int): La source du graphe.
+
+    Returns:
+        DictionnaireAdjacenceOrientePondere: Le graphe résultant de l'union des chemins.
+    """
     graphe = DictionnaireAdjacenceOrientePondere()
     graphe.ajouter_sommets(G1.sommets())
     
@@ -68,6 +96,16 @@ def union_chemin(G1, G2, G3, s):
     return graphe
 
 def union_chemin_iter(lst_G, s):
+    """
+    Crée un nouveau graphe en unissant les chemins les plus courts de plusieurs graphes à partir d'une source donnée.
+
+    Parameters:
+        lst_G (list): Une liste de graphes homogènes d'entrée.
+        s (int): La source du graphe.
+
+    Returns:
+        DictionnaireAdjacenceOrientePondere: Le graphe résultant de l'union des chemins.
+    """
     H = DictionnaireAdjacenceOrientePondere()
     if len(lst_G) > 0:
         H.ajouter_sommets(lst_G[0].sommets())

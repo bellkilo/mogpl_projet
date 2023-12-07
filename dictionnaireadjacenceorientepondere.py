@@ -185,6 +185,16 @@ class DictionnaireAdjacenceOrientePondere(object):
 
 
     def saveGraph(self, file, source):
+        """
+        Enregistre le graphe dans un fichier texte.
+
+        Parameters:
+            file (file): Objet de fichier ouvert en écriture.
+            source (int): La source du graphe.
+
+        Returns:
+            None
+        """
         file.write("{} {}".format(self.nombre_sommets(), source))
         file.write('\n')
         for v in self.sommets(): 
@@ -195,6 +205,15 @@ class DictionnaireAdjacenceOrientePondere(object):
                 file.write('\n')
 
     def grapheFromFile(file):
+        """
+        Crée un objet de type DictionnaireAdjacenceOrientePondere à partir des données d'un fichier texte.
+
+        Parameters:
+            file (file): Objet de fichier ouvert en lecture.
+
+        Returns:
+            Tuple: Un tuple contenant le graphe créé (objet DictionnaireAdjacenceOrientePondere) et la source du graphe.
+        """
         texts = file.readlines()
         g = DictionnaireAdjacenceOrientePondere()
         n, s = texts[0].split(' ')
