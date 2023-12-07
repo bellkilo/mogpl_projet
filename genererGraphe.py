@@ -8,26 +8,26 @@ def generer_graphe(n):
     G = DictionnaireAdjacenceOrientePondere()
     G.ajouter_sommets([i for i in range(n)])
 
-    source = random.randint(0,n-1)
+    source = random.randint(0, n-1)
     
     sommets_accessible = set()
     sommets_accessible.add(source)
 
     while len(sommets_accessible) <= n/2:
-        u = random.randint(0,n-1)
-        v = random.randint(0,n-1)
+        u = random.randint(0, n-1)
+        v = random.randint(0, n-1)
         if v != u and v not in G.successeurs(u):
-            poids = random.randint(-10, 10-1)
+            poids = random.randint(-10, 10)
             G.ajouter_arc(u, v, poids)
             if u in sommets_accessible:
                 sommets_accessible.add(v)
 
     for u in G.sommets():
         out_edges = G.degre_sortant(u)
-        while out_edges < 2:
-            v = random.randint(0,n-1)
+        while out_edges < 5:
+            v = random.randint(0, n-1)
             if v != u and v not in G.successeurs(u):
-                poids = random.randint(-10, 10-1)
+                poids = random.randint(-10, 10)
                 G.ajouter_arc(u, v, poids)
                 out_edges += 1
     
@@ -67,11 +67,23 @@ def union_chemin(G1, G2, G3, s):
             graphe.ajouter_arc(chemin3[u], u, 1)
     return graphe
 
-
+def union_chemin_iter(lst_G, s):
+    H = DictionnaireAdjacenceOrientePondere()
+    if len(lst_G) > 0:
+        H.ajouter_sommets(lst_G[0].sommets())
+        for i in range(len(lst_G)):
+            chemin, _,_ = BellmanFord(lst_G[i], s)
+            for v in range(len(chemin)):
+                u = chemin[v]
+                if u == v:
+                    continue # pas de boucle
+                if u is not None and v not in H.successeurs(u):
+                    H.ajouter_arc(u, v, 1)
+    return H
 
 if __name__ == '__main__':
     while True:
-        g, s = generer_graphe(5)
+        g, s = generer_graphe(8)
         parent, k, isNegatif = BellmanFord(g, s)
         if isNegatif == 0:
             break
